@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Photo Search</title>
+    <link rel="icon" type="image/png" href="https://www.flickr.com/" />
+    <meta charset="utf-8" />
+    <style>
+        body {
+            background: lightblue;
+        }
+
+        h1 {
+            text-align: center;
+            color: royalblue;
+            font-weight: bold;
+        }
+
+        .container {
+            text-align: center;
+            width: 985px;
+            margin: auto;
+            border: royalblue;
+            color: royalblue;
+            font-size: 25px;
+        }
+
+        #content {
+            padding: 10px;
+        }
+
+        #reset, #submit {
+            font-size: 25px;
+            margin: auto;
+            padding: 5px 10px;
+            background: white;
+            border: 2px solid royalblue;
+            color: royalblue;
+            cursor: pointer;
+        }
+
+            #submit:hover, #reset:hover {
+                background: royalblue;
+                border: 2px solid white;
+                color: white;
+            }
+
+        #outputDiv {
+            color: royalblue;
+        }
+
+        input {
+            border: 2px solid royalblue;
+            background: white;
+            color: royalblue;
+            font-size: 25px;
+            margin: auto;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flicker Photo Search</h1>
+    <div class="container">
+        <div id="content">
+            <input id="search" type="text" placeholder="search photo" />
+            <button id="submit" onclick="JavaScriptFetch()">Submit</button>
+            <button id="reset">Reset »</button>
+            <div id="outputDiv"></div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        /*JavaScript Method*/
+        function JavaScriptFetch() {
+            var script = document.createElement('script');
+            script.src = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=" + document.getElementById("search").value;;
+            document.querySelector('head').appendChild(script);
+        }
+
+        function jsonFlickrFeed(data) {
+            var image = "";
+            data.items.forEach(function (element) {
+                image += "<img src=\"" + element.media.m + "\"/>";
+            });
+
+            document.getElementById("outputDiv").innerHTML = image;
+        }
+        /*End*/
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#reset").click(function (e) {
+                location.reload();
+            });
+
+            $("#submit").click(function (e) {
+                $("#outputDiv").html("");
+
+            });
+        });
+    </script>
+</body>
+</html>
